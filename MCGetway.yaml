@@ -1,20 +1,21 @@
 eureka:
-     client:
-          serviceURL:
-                defaultZone: http://localhost:9095/eureka
+  client:
+    serviceURL:
+      defaultZone: http://localhost:9095/eureka
 spring:
-      cloud:
-           gateway:
-               routes:
-                   -id:utilisateur
-                    url:lb://utilisateur
-                    predicates:
-                     -Path= /utilisateur/**
-                    filters:
-                     -RewritePath=/utilisateur/(?<path>.*), /$\{path}
-                   -id:projet
-                    url:lb://projet
-                    predicates:
-                     -Path= /projet/**
-                    filters:
-                     -RewritePath=/projet/(?<path>.*), /$\{path}
+  cloud:
+    gateway:
+      routes:
+        - id: utilisateur
+          uri: lb://utilisateur
+          predicates:
+            - Path=/utilisateur/**
+          filters:
+            - RewritePath=/utilisateur/(?<path>.*), /${path}
+        - id: projet
+          uri: lb://projet
+          predicates:
+            - Path=/projet/**
+          filters:
+            - RewritePath=/projet/(?<path>.*), /${path}
+
